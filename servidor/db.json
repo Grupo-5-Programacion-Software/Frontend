@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Juan Perez",
+      "document": "12345678"
+    },
+    {
+      "id": 2,
+      "name": "Maria Gomez",
+      "document": "87654321"
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Aprender CRUD",
+      "description": "Practicar json-server",
+      "status": "Pendiente",
+      "userId": 1,
+      "createdAt": "2025-06-02T10:00:00"
+    }
+  ]
+}
