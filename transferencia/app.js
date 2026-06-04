@@ -163,18 +163,16 @@ function prependTask(task) {
   hideEmptyState();
 }
 
-// Consulta el usuario en el servidor usando el numero de documento.
+// Consulta todos los usuarios y luego busca el documento en JavaScript.
 async function searchUserByDocument(documentNumber) {
-  const response = await fetch(
-    `${API_URL}/users?documento=${encodeURIComponent(documentNumber)}`
-  );
+  const response = await fetch(`${API_URL}/users`);
 
   if (!response.ok) {
     throw new Error("No se pudo consultar el usuario.");
   }
 
   const users = await response.json();
-  return users[0] ?? null;
+  return users.find((user) => String(user.documento) === documentNumber) ?? null;
 }
 
 // Carga las tareas que ya estaban asociadas al usuario encontrado.
