@@ -1,82 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Tareas por Usuario</title>
-    <!-- Aquí linkeo el CSS para que se vea bonito -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grupo 5</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Gestión de Tareas por Usuario</h1>
-    
-    <!-- Sección para buscar usuario: Uso este form en JS para buscar sin recargar -->
-    <section id="busqueda-usuario">
-        <h2>Buscar Usuario</h2>
-        <form id="form-usuario">
-            <label for="user-id">Documento del Usuario:</label>
-            <!-- Input donde pongo el ID del usuario -->
-            <input type="number" id="user-id" required>
-            <button type="submit">Buscar Usuario</button>
-        </form>
-        <!-- Aquí muestro la info del usuario si lo encuentro -->
-        <div id="usuario-info" style="display: none;">
-            <h3>Datos del Usuario</h3>
-            <p><strong>ID:</strong> <span id="user-id-display"></span></p>
-            <p><strong>Nombre:</strong> <span id="user-name"></span></p>
-            <p><strong>Email:</strong> <span id="user-email"></span></p>
-            <p><strong>Teléfono:</strong> <span id="user-phone"></span></p>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Actividad de transferencia</p>
+      <h1>Gestion de tareas por usuario</h1>
+      <p class="hero-text">
+        Esta interfaz permite buscar un usuario existente en el servidor local y registrar
+        tareas sin recargar la pagina, usando eventos y manipulacion del DOM.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>1. Buscar usuario</h2>
+        <span class="badge">DOM + fetch</span>
+      </div>
+
+      <form id="search-form" novalidate>
+        <div class="field">
+          <label for="documento">Documento</label>
+          <input
+            type="text"
+            id="documento"
+            name="documento"
+            placeholder="Ejemplo: 1001"
+            autocomplete="off"
+          >
+          <small>Busca un usuario que ya exista en la base de datos.</small>
         </div>
-        <!-- Si no encuentro al usuario, muestro este mensaje -->
-        <div id="usuario-no-encontrado" style="display: none;">
-            <p>Usuario no encontrado en el sistema.</p>
+        <button type="submit" id="search-button">Buscar usuario</button>
+      </form>
+
+      <p id="search-feedback" class="feedback hidden"></p>
+
+      <article id="user-panel" class="user-panel hidden">
+        <h3>Usuario encontrado</h3>
+        <div class="user-grid">
+          <p><strong>Documento:</strong> <span id="user-document">-</span></p>
+          <p><strong>Nombre:</strong> <span id="user-name">-</span></p>
+          <p><strong>Correo:</strong> <span id="user-email">-</span></p>
+          <p><strong>ID:</strong> <span id="user-id">-</span></p>
         </div>
+      </article>
     </section>
-    
-    <!-- Sección para registrar tareas: Solo aparece si encontré al usuario -->
-    <section id="registro-tareas" style="display: none;">
-        <h2>Registrar Tarea</h2>
-        <form id="form-tarea">
-            <label for="task-title">Título de la Tarea:</label>
-            <!-- Campo para el título de la tarea -->
-            <input type="text" id="task-title" required>
-            
-            <label for="task-description">Descripción:</label>
-            <!-- Campo para la descripción -->
-            <textarea id="task-description" required></textarea>
-            
-            <label for="task-status">Estado:</label>
-            <!-- Select para elegir el estado -->
-            <select id="task-status" required>
-                <option value="">Seleccionar</option>
-                <option value="pending">Pendiente</option>
-                <option value="in-progress">En Progreso</option>
-                <option value="completed">Completada</option>
-            </select>
-            
-            <button type="submit">Registrar Tarea</button>
-        </form>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>2. Registrar tarea</h2>
+        <span class="badge badge-muted">Se habilita al encontrar usuario</span>
+      </div>
+
+      <form id="task-form" novalidate aria-disabled="true">
+        <div class="field">
+          <label for="task-title">Titulo de la tarea</label>
+          <input
+            type="text"
+            id="task-title"
+            name="task-title"
+            placeholder="Ejemplo: Crear tabla dinamica"
+            disabled
+          >
+        </div>
+
+        <div class="field">
+          <label for="task-description">Descripcion</label>
+          <textarea
+            id="task-description"
+            name="task-description"
+            placeholder="Describe la tarea que vas a registrar"
+            rows="4"
+            disabled
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="task-status">Estado</label>
+          <select id="task-status" name="task-status" disabled>
+            <option value="">Selecciona un estado</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Completada">Completada</option>
+          </select>
+        </div>
+
+        <button type="submit" id="task-button" disabled>Guardar tarea</button>
+      </form>
+
+      <p id="task-feedback" class="feedback hidden"></p>
     </section>
-    
-    <!-- Sección de la tabla: Aquí van apareciendo las tareas que agrego -->
-    <section id="lista-tareas">
-        <h2>Tareas Registradas</h2>
-        <table id="tasks-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tareas se agregarán aquí dinámicamente por app.js -->
-            </tbody>
+
+    <section class="card">
+      <div class="card-header">
+        <h2>3. Tareas registradas</h2>
+        <span id="task-count" class="badge">0 tareas</span>
+      </div>
+
+      <p id="empty-state" class="empty-state">
+        Busca un usuario para cargar sus tareas y habilitar el formulario.
+      </p>
+
+      <div id="table-wrapper" class="table-wrapper hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Titulo</th>
+              <th>Descripcion</th>
+              <th>Estado</th>
+              <th>Usuario</th>
+            </tr>
+          </thead>
+          <tbody id="tasks-body"></tbody>
         </table>
+      </div>
     </section>
-    
-    <!-- Aquí linkeo el JS que hace todo lo interactivo -->
-    <script src="app.js"></script>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
