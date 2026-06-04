@@ -276,6 +276,45 @@ tbody tr:last-child td { /* Estilos para la última fila de datos */
   color: #166534; /* Texto verde oscuro */
 }
 
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #6d28d9;
+  color: #ffffff;
+}
+
+.action-button.delete-button {
+  background: #dc2626;
+}
+
+.action-button.edit-button {
+  background: #2563eb;
+}
+
+button.secondary {
+  background: #ffffff;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+button.secondary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+}
+
 .hidden { /* Clase para ocultar elementos */
   display: none; /* No muestra el elemento */
 }

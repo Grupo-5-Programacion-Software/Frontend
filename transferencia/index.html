@@ -91,6 +91,7 @@
         </div>
 
         <button type="submit" id="task-button" disabled>Guardar tarea</button>
+      <button type="button" id="cancel-edit-button" class="secondary hidden">Cancelar edición</button>
       </form>
 
       <p id="task-feedback" class="feedback hidden"></p>
@@ -115,6 +116,7 @@
               <th>Descripcion</th>
               <th>Estado</th>
               <th>Usuario</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="tasks-body"></tbody>
@@ -123,6 +125,6 @@
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <script type="module" src="./src/app.js"></script>
 </body>
 </html>
