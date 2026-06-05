@@ -2,61 +2,61 @@
   "users": [
     {
       "id": "1",
-      "documento": "1001",
+      "documento": 1001,
       "name": "Ana Torres",
       "email": "ana.torres@mail.com"
     },
     {
       "id": "2",
-      "documento": "1002",
+      "documento": 1002,
       "name": "Carlos Gómez",
       "email": "carlos.gomez@mail.com"
     },
     {
       "id": "3",
-      "documento": "1003",
+      "documento": 1003,
       "name": "María López",
       "email": "maria.lopez@mail.com"
     },
     {
       "id": "4",
-      "documento": "1004",
+      "documento": 1004,
       "name": "Juan Pérez",
       "email": "juan.perez@mail.com"
     },
     {
       "id": "5",
-      "documento": "1005",
+      "documento": 1005,
       "name": "Laura Martínez",
       "email": "laura.martinez@mail.com"
     },
     {
       "id": "6",
-      "documento": "1006",
+      "documento": 1006,
       "name": "Pedro Sánchez",
       "email": "pedro.sanchez@mail.com"
     },
     {
       "id": "7",
-      "documento": "1007",
+      "documento": 1007,
       "name": "Sofía Ramírez",
       "email": "sofia.ramirez@mail.com"
     },
     {
       "id": "8",
-      "documento": "1008",
+      "documento": 1008,
       "name": "Andrés Morales",
       "email": "andres.morales@mail.com"
     },
     {
       "id": "9",
-      "documento": "1009",
+      "documento": 1009,
       "name": "Valentina Cruz",
       "email": "valentina.cruz@mail.com"
     },
     {
       "id": "10",
-      "documento": "1010",
+      "documento": 1010,
       "name": "Diego Herrera",
       "email": "diego.herrera@mail.com"
     }
@@ -89,15 +89,6 @@
       "title": "Permitir edición de tareas",
       "description": "Carga en formulario e actualización con PATCH.",
       "status": "Pendiente"
-    },
-    {
-      "userId": "7",
-      "documento": "1007",
-      "userName": "Sofía Ramírez",
-      "title": "html",
-      "description": "conexiones",
-      "status": "Pendiente",
-      "id": "rEx7ITG0ik0"
     }
   ],
   "posts": [
@@ -225,5 +216,4 @@
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
->>>>>>> 4e26a41 (feat: implementar CRUD de tareas y modularización ES Modules. Closes #25)
 }
