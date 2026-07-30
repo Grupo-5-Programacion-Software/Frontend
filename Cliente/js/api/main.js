@@ -6,7 +6,7 @@ import {
 import {
   renderizarTablaCategorias, renderizarTablaProductos, cargarSelectCategorias
 } from './ui/inventarioUI.js';
-import { mostrarMensaje, confirmarAccion } from './utils/helpers.js';
+import { mostrarNotificacion, mostrarConfirmacion, mostrarCargando } from './utils/helpers.js';
 
 let editingCategoryId = null;
 let editingProductId = null;
@@ -21,17 +21,21 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 
 async function cargarCategorias() {
+  mostrarCargando(true);
   try {
     const categorias = await obtenerCategorias();
     renderizarTablaCategorias(categorias);
     return categorias;
   } catch (error) {
-    mostrarMensaje('Error al cargar categorías: ' + error.message);
+    mostrarNotificacion('Error al cargar categorías: ' + error.message);
     return [];
+  } finally {
+    mostrarCargando(false);
   }
 }
 
 async function cargarProductos() {
+  mostrarCargando(true);
   try {
     const [productos, categorias] = await Promise.all([
       obtenerProductos(),
@@ -40,27 +44,31 @@ async function cargarProductos() {
     renderizarTablaProductos(productos, categorias);
     cargarSelectCategorias(categorias);
   } catch (error) {
-    mostrarMensaje('Error al cargar productos: ' + error.message);
+    mostrarNotificacion('Error al cargar productos: ' + error.message);
+  } finally {
+    mostrarCargando(false);
   }
 }
 
 document.getElementById('add-category').addEventListener('click', async () => {
   const input = document.getElementById('category-name');
   const name = input.value.trim();
-  if (!name) return mostrarMensaje('Ingrese un nombre para la categoría');
+  if (!name) return mostrarNotificacion('Ingrese un nombre para la categoría');
 
   try {
     if (editingCategoryId) {
       await actualizarCategoria(editingCategoryId, name);
       editingCategoryId = null;
       document.getElementById('add-category').textContent = 'Agregar';
+      mostrarNotificacion('Categoría actualizada correctamente', 'exito');
     } else {
       await crearCategoria(name);
+      mostrarNotificacion('Categoría creada correctamente', 'exito');
     }
     input.value = '';
     await cargarCategorias();
   } catch (error) {
-    mostrarMensaje(error.message);
+    mostrarNotificacion(error.message);
   }
 });
 
@@ -76,12 +84,14 @@ document.getElementById('categories-body').addEventListener('click', async (e) =
   }
 
   if (button.classList.contains('delete')) {
-    if (!confirmarAccion('¿Eliminar categoría?')) return;
+    const confirmado = await mostrarConfirmacion('¿Eliminar categoría?');
+    if (!confirmado) return;
     try {
       await eliminarCategoria(id);
+      mostrarNotificacion('Categoría eliminada correctamente', 'exito');
       await cargarCategorias();
     } catch (error) {
-      mostrarMensaje(error.message);
+      mostrarNotificacion(error.message);
     }
   }
 });
@@ -92,7 +102,7 @@ document.getElementById('add-product').addEventListener('click', async () => {
   const categoryId = document.getElementById('product-category').value;
 
   if (!name || !price || !categoryId) {
-    return mostrarMensaje('Nombre, precio y categoría son obligatorios');
+    return mostrarNotificacion('Nombre, precio y categoría son obligatorios');
   }
 
   try {
@@ -100,15 +110,17 @@ document.getElementById('add-product').addEventListener('click', async () => {
       await actualizarProducto(editingProductId, { name, price: Number(price), categoryId: Number(categoryId) });
       editingProductId = null;
       document.getElementById('add-product').textContent = 'Agregar';
+      mostrarNotificacion('Producto actualizado correctamente', 'exito');
     } else {
       await crearProducto({ name, price: Number(price), categoryId: Number(categoryId) });
+      mostrarNotificacion('Producto creado correctamente', 'exito');
     }
     document.getElementById('product-name').value = '';
     document.getElementById('product-price').value = '';
     document.getElementById('product-category').value = '';
     await cargarProductos();
   } catch (error) {
-    mostrarMensaje(error.message);
+    mostrarNotificacion(error.message);
   }
 });
 
@@ -127,17 +139,19 @@ document.getElementById('products-body').addEventListener('click', async (e) => 
       document.getElementById('add-product').textContent = 'Actualizar';
       document.querySelector('[data-tab="products"]').click();
     } catch (error) {
-      mostrarMensaje('Error al obtener producto: ' + error.message);
+      mostrarNotificacion('Error al obtener producto: ' + error.message);
     }
   }
 
   if (button.classList.contains('delete')) {
-    if (!confirmarAccion('¿Eliminar producto?')) return;
+    const confirmado = await mostrarConfirmacion('¿Eliminar producto?');
+    if (!confirmado) return;
     try {
       await eliminarProducto(id);
+      mostrarNotificacion('Producto eliminado correctamente', 'exito');
       await cargarProductos();
     } catch (error) {
-      mostrarMensaje(error.message);
+      mostrarNotificacion(error.message);
     }
   }
 });
