@@ -1,36 +1,13 @@
-# Frontend - Interfaz Web de Gestión de Categorías y Productos
+# Frontend — Interfaz Web de Gestión de Categorías y Productos
 
-Frontend web desarrollado con **HTML, CSS y JavaScript vanilla** que consume la API REST de gestión de inventario.
+**Repositorio principal del frontend del proyecto.**  
+El código fuente activo y en desarrollo se encuentra en la rama [`develop`](../../tree/develop).
 
-## 🚀 Tecnologías
+## Rama `main`
+Esta rama contiene únicamente la documentación general del proyecto.  
+Para contribuciones, revisión de código y desarrollo, trabajar sobre la rama `develop`.
 
-- HTML5
-- CSS3
-- JavaScript Vanilla (Fetch API)
-
-## 📁 Estructura
-
-```
-├── index.html      # Página principal
-├── css/
-│   └── style.css   # Estilos
-├── js/
-│   └── app.js      # Lógica de consumo de API
-└── README.md
-```
-
-## ▶️ Cómo usar
-
-1. Asegúrate de que el **Backend** esté corriendo en `http://localhost:3000`
-2. Abre `index.html` en tu navegador o usa Live Server
-
-## 🔗 Endpoints que consume
-
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | /categories | Listar categorías |
-| POST | /categories | Crear categoría |
-| PUT | /categories/:id | Actualizar categoría |
-| DELETE | /categories/:id | Eliminar categoría |
-| GET | /products | Listar productos |
-| DELETE | /products/:id | Eliminar producto |
+## Enlaces
+- [Código fuente (develop)](../../tree/develop)
+- [Documentación general del proyecto](https://github.com/Grupo-5-Programacion-Software/.github)
+- [Backend API](https://github.com/Grupo-5-Programacion-Software/Backend)
