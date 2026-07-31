@@ -1,3 +1,23 @@
+/**
+ * ==========================================================
+ * MÓDULO DE FUNCIONES AUXILIARES (HELPERS)
+ * ==========================================================
+ *
+ * Este módulo reúne funciones reutilizables que apoyan
+ * el funcionamiento de la interfaz de usuario.
+ *
+ * Funcionalidades:
+ * - Mostrar notificaciones al usuario.
+ * - Mostrar cuadros de confirmación.
+ * - Controlar el indicador de carga (spinner).
+ *
+ * Estas funciones mejoran la experiencia del usuario y
+ * pueden ser utilizadas desde cualquier módulo del
+ * frontend.
+ */
+
+
+// Muestra un mensaje temporal de notificación en la interfaz.
 export function mostrarNotificacion(mensaje, tipo = 'error') {
   const container = document.getElementById('notificaciones') || crearContenedorNotificaciones();
   const notificacion = document.createElement('div');
@@ -7,6 +27,7 @@ export function mostrarNotificacion(mensaje, tipo = 'error') {
   setTimeout(() => notificacion.remove(), 3000);
 }
 
+// Crea el contenedor donde se mostrarán las notificaciones.
 function crearContenedorNotificaciones() {
   const div = document.createElement('div');
   div.id = 'notificaciones';
@@ -14,6 +35,7 @@ function crearContenedorNotificaciones() {
   return div;
 }
 
+// Muestra una ventana de confirmación antes de ejecutar una acción.
 export function mostrarConfirmacion(mensaje) {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
@@ -45,6 +67,7 @@ export function mostrarConfirmacion(mensaje) {
   });
 }
 
+// Muestra u oculta el indicador de carga mientras se procesa una operación.
 export function mostrarCargando(mostrar = true) {
   let spinner = document.getElementById('loading-spinner');
   if (mostrar) {

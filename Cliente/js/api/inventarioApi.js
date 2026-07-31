@@ -1,5 +1,25 @@
+/**
+ * ==========================================================
+ * SERVICIO DE COMUNICACIÓN CON LA API
+ * ==========================================================
+ *
+ * Este módulo centraliza todas las peticiones HTTP que el
+ * frontend realiza hacia el servidor.
+ *
+ * Funcionalidades:
+ * - Consultar categorías.
+ * - Crear, actualizar y eliminar categorías.
+ * - Consultar productos.
+ * - Crear, actualizar y eliminar productos.
+ *
+ * Todas las funciones utilizan Fetch API y devuelven la
+ * información obtenida desde el backend.
+ */
+
+
 const API_BASE_URL = 'http://localhost:3000';
 
+// Obtiene todas las categorías registradas.
 export async function obtenerCategorias() {
   const res = await fetch(`${API_BASE_URL}/categories`);
   if (!res.ok) throw new Error('Error al cargar categorías');
@@ -7,6 +27,7 @@ export async function obtenerCategorias() {
   return json.data;
 }
 
+// Obtiene una categoría específica por su identificador.
 export async function obtenerCategoriaPorId(id) {
   const res = await fetch(`${API_BASE_URL}/categories/${id}`);
   if (!res.ok) throw new Error('Error al obtener categoría');
@@ -14,6 +35,7 @@ export async function obtenerCategoriaPorId(id) {
   return json.data;
 }
 
+// Envía una solicitud para crear una nueva categoría.
 export async function crearCategoria(nombre) {
   const res = await fetch(`${API_BASE_URL}/categories`, {
     method: 'POST',
@@ -25,6 +47,7 @@ export async function crearCategoria(nombre) {
   return json.data;
 }
 
+// Actualiza la información de una categoría existente.
 export async function actualizarCategoria(id, nombre) {
   const res = await fetch(`${API_BASE_URL}/categories/${id}`, {
     method: 'PUT',
@@ -36,6 +59,7 @@ export async function actualizarCategoria(id, nombre) {
   return json.data;
 }
 
+// Elimina una categoría según su identificador.
 export async function eliminarCategoria(id) {
   const res = await fetch(`${API_BASE_URL}/categories/${id}`, { method: 'DELETE' });
   const json = await res.json();
@@ -43,6 +67,7 @@ export async function eliminarCategoria(id) {
   return json;
 }
 
+// Obtiene todos los productos disponibles.
 export async function obtenerProductos() {
   const res = await fetch(`${API_BASE_URL}/products`);
   if (!res.ok) throw new Error('Error al cargar productos');
@@ -50,6 +75,7 @@ export async function obtenerProductos() {
   return json.data;
 }
 
+// Consulta un producto específico por su identificador.
 export async function obtenerProductoPorId(id) {
   const res = await fetch(`${API_BASE_URL}/products/${id}`);
   if (!res.ok) throw new Error('Error al obtener producto');
@@ -57,6 +83,7 @@ export async function obtenerProductoPorId(id) {
   return json.data;
 }
 
+// Registra un nuevo producto en el sistema.
 export async function crearProducto(producto) {
   const res = await fetch(`${API_BASE_URL}/products`, {
     method: 'POST',
@@ -68,6 +95,7 @@ export async function crearProducto(producto) {
   return json.data;
 }
 
+// Actualiza la información de un producto existente.
 export async function actualizarProducto(id, producto) {
   const res = await fetch(`${API_BASE_URL}/products/${id}`, {
     method: 'PUT',
@@ -79,6 +107,7 @@ export async function actualizarProducto(id, producto) {
   return json.data;
 }
 
+// Elimina un producto del sistema.
 export async function eliminarProducto(id) {
   const res = await fetch(`${API_BASE_URL}/products/${id}`, { method: 'DELETE' });
   const json = await res.json();

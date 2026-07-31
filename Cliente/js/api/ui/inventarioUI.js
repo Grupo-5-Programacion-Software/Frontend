@@ -1,3 +1,23 @@
+/**
+ * ==========================================================
+ * MÓDULO DE INTERFAZ DE USUARIO (UI)
+ * ==========================================================
+ *
+ * Este módulo contiene las funciones encargadas de
+ * actualizar la interfaz gráfica del sistema.
+ *
+ * Responsabilidades:
+ * - Renderizar la tabla de categorías.
+ * - Renderizar la tabla de productos.
+ * - Cargar las categorías disponibles en el selector
+ *   del formulario de productos.
+ *
+ * Estas funciones únicamente manipulan el DOM y no
+ * realizan comunicación directa con la API.
+ */
+
+
+// Muestra en la tabla todas las categorías registradas.
 export function renderizarTablaCategorias(categorias) {
   const tbody = document.getElementById('categories-body');
   tbody.innerHTML = '';
@@ -14,6 +34,7 @@ export function renderizarTablaCategorias(categorias) {
   });
 }
 
+// Renderiza la tabla de productos mostrando su categoría correspondiente.
 export function renderizarTablaProductos(productos, categorias) {
   const catMap = {};
   categorias.forEach(c => catMap[c.id] = c.name);
@@ -35,6 +56,7 @@ export function renderizarTablaProductos(productos, categorias) {
   });
 }
 
+// Llena el selector de categorías utilizado en el formulario de productos.
 export function cargarSelectCategorias(categorias) {
   const select = document.getElementById('product-category');
   select.innerHTML = '<option value="">Seleccionar categoría</option>';

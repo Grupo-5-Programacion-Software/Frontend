@@ -1,3 +1,27 @@
+/**
+ * ==========================================================
+ * MÓDULO PRINCIPAL DEL FRONTEND
+ * ==========================================================
+ *
+ * Este archivo coordina el funcionamiento general de la
+ * aplicación de inventario.
+ *
+ * Responsabilidades:
+ * - Inicializar la interfaz.
+ * - Gestionar los eventos de los formularios.
+ * - Consumir los servicios de la API.
+ * - Actualizar la información mostrada al usuario.
+ * - Coordinar la interacción entre la capa de interfaz
+ *   (UI) y la capa de servicios.
+ *
+ * Flujo general:
+ * 1. El usuario realiza una acción.
+ * 2. Se llama al servicio correspondiente.
+ * 3. Se procesa la respuesta del servidor.
+ * 4. Se actualiza la interfaz.
+ */
+
+
 import {
   obtenerCategorias, obtenerProductos, crearCategoria, actualizarCategoria,
   eliminarCategoria, crearProducto, actualizarProducto, eliminarProducto,
@@ -20,6 +44,7 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
+// Obtiene las categorías desde la API y actualiza la tabla.
 async function cargarCategorias() {
   mostrarCargando(true);
   try {
@@ -34,6 +59,7 @@ async function cargarCategorias() {
   }
 }
 
+// Obtiene los productos y las categorías para renderizar la información.
 async function cargarProductos() {
   mostrarCargando(true);
   try {
@@ -50,6 +76,7 @@ async function cargarProductos() {
   }
 }
 
+// Gestiona el registro y actualización de categorías.
 document.getElementById('add-category').addEventListener('click', async () => {
   const input = document.getElementById('category-name');
   const name = input.value.trim();
@@ -72,6 +99,7 @@ document.getElementById('add-category').addEventListener('click', async () => {
   }
 });
 
+// Controla las acciones de editar y eliminar categorías.
 document.getElementById('categories-body').addEventListener('click', async (e) => {
   const button = e.target.closest('button');
   if (!button) return;
@@ -96,6 +124,7 @@ document.getElementById('categories-body').addEventListener('click', async (e) =
   }
 });
 
+// Gestiona el registro y actualización de productos.
 document.getElementById('add-product').addEventListener('click', async () => {
   const name = document.getElementById('product-name').value.trim();
   const price = document.getElementById('product-price').value.trim();
@@ -124,6 +153,7 @@ document.getElementById('add-product').addEventListener('click', async () => {
   }
 });
 
+// Controla las acciones de editar y eliminar productos.
 document.getElementById('products-body').addEventListener('click', async (e) => {
   const button = e.target.closest('button');
   if (!button) return;
@@ -156,5 +186,6 @@ document.getElementById('products-body').addEventListener('click', async (e) => 
   }
 });
 
+// Inicializa la aplicación cargando las categorías y productos disponibles.
 cargarCategorias();
 cargarProductos();
