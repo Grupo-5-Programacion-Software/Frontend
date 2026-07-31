@@ -19,11 +19,8 @@
  * 2. Se llama al servicio correspondiente.
  * 3. Se procesa la respuesta del servidor.
  * 4. Se actualiza la interfaz.
- *
- * Autor de la documentación:
- * Selena Molina
- * ==========================================================
  */
+
 
 import {
   obtenerCategorias, obtenerProductos, crearCategoria, actualizarCategoria,

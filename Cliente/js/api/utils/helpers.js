@@ -16,6 +16,7 @@
  * frontend.
  */
 
+
 // Muestra un mensaje temporal de notificación en la interfaz.
 export function mostrarNotificacion(mensaje, tipo = 'error') {
   const container = document.getElementById('notificaciones') || crearContenedorNotificaciones();

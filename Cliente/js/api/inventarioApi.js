@@ -14,11 +14,8 @@
  *
  * Todas las funciones utilizan Fetch API y devuelven la
  * información obtenida desde el backend.
- *
- * Autor de la documentación:
- * Selena Molina
- * ==========================================================
  */
+
 
 const API_BASE_URL = 'http://localhost:3000';
 

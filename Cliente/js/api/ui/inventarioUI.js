@@ -14,11 +14,8 @@
  *
  * Estas funciones únicamente manipulan el DOM y no
  * realizan comunicación directa con la API.
- *
- * Autor de la documentación:
- * Selena Molina
- * ==========================================================
  */
+
 
 // Muestra en la tabla todas las categorías registradas.
 export function renderizarTablaCategorias(categorias) {
