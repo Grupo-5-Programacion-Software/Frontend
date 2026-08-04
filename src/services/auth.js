@@ -11,8 +11,8 @@
  * de autenticación y el control de acceso por rol en la UI.
  *
  * Roles disponibles (coinciden con la base de datos):
- * - Admin      -> acceso total.
- * - Inventario -> módulos de inventario y tareas.
+ * - Admin      -> acceso total (incluye usuarios y productos).
+ * - Inventario -> inventario, productos y tareas.
  * - Vendedor   -> solo PQRS.
  */
 
@@ -42,8 +42,8 @@ const USUARIOS = [
 
 /** Mapa de acceso: cada rol puede ver ciertas pestañas. */
 const ACCESO_POR_ROL = {
-  Admin: ["inventory", "tasks", "pqrs", "admin"],
-  Inventario: ["inventory", "tasks"],
+  Admin: ["inventory", "products", "tasks", "pqrs", "admin", "users"],
+  Inventario: ["inventory", "products", "tasks"],
   Vendedor: ["pqrs"],
 };
 

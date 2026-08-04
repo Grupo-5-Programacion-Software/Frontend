@@ -151,6 +151,18 @@ function fallbackRequest(path, options = {}) {
     return Promise.resolve(successPayload(nuevaPqrs, "Solicitud enviada"));
   }
 
+  if (path === "/users" && method === "POST") {
+    const nuevoUsuario = {
+      id: Date.now(),
+      name: body.name,
+      email: body.email,
+      role: "Vendedor",
+    };
+    data.users.push(nuevoUsuario);
+    saveMockData(data);
+    return Promise.resolve(successPayload(nuevoUsuario, "Usuario creado"));
+  }
+
   if (path.startsWith("/categories/") && method === "GET") {
     const id = toSingleId(path);
     const item = data.categories.find((entry) => entry.id === id);
@@ -166,6 +178,12 @@ function fallbackRequest(path, options = {}) {
   if (path.startsWith("/tasks/") && method === "GET") {
     const id = toSingleId(path);
     const item = data.tasks.find((entry) => entry.id === id);
+    return Promise.resolve(successPayload(item || null));
+  }
+
+  if (path.startsWith("/users/") && method === "GET") {
+    const id = toSingleId(path);
+    const item = data.users.find((entry) => entry.id === id);
     return Promise.resolve(successPayload(item || null));
   }
 
@@ -200,6 +218,17 @@ function fallbackRequest(path, options = {}) {
       return Promise.resolve(successPayload(data.tasks[index], "Tarea actualizada"));
     }
     return Promise.reject(new Error("Tarea no encontrada"));
+  }
+
+  if (path.startsWith("/users/") && method === "PUT") {
+    const id = toSingleId(path);
+    const index = data.users.findIndex((entry) => entry.id === id);
+    if (index >= 0) {
+      data.users[index] = { ...data.users[index], ...body };
+      saveMockData(data);
+      return Promise.resolve(successPayload(data.users[index], "Usuario actualizado"));
+    }
+    return Promise.reject(new Error("Usuario no encontrado"));
   }
 
   if (path.startsWith("/tasks/") && method === "PATCH") {
@@ -255,6 +284,17 @@ function fallbackRequest(path, options = {}) {
       return Promise.resolve(successPayload(null, "Tarea eliminada"));
     }
     return Promise.reject(new Error("Tarea no encontrada"));
+  }
+
+  if (path.startsWith("/users/") && method === "DELETE") {
+    const id = toSingleId(path);
+    const index = data.users.findIndex((entry) => entry.id === id);
+    if (index >= 0) {
+      data.users.splice(index, 1);
+      saveMockData(data);
+      return Promise.resolve(successPayload(null, "Usuario eliminado"));
+    }
+    return Promise.reject(new Error("Usuario no encontrado"));
   }
 
   if (path.startsWith("/pqrs/") && method === "DELETE") {

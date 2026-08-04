@@ -20,18 +20,22 @@
  */
 import "./style.css";
 import { initInventoryView } from "./views/inventoryView.js";
+import { initProductsView } from "./views/productsView.js";
 import { initTasksView } from "./views/tasksView.js";
 import { initPqrsView } from "./views/pqrsView.js";
 import { initAdminView } from "./views/adminView.js";
+import { initUsersView } from "./views/usersView.js";
 import { initAuthView, mostrarLogin, ocultarLogin } from "./views/authView.js";
 import { obtenerSesion, tieneAcceso } from "./services/auth.js";
 
 /** Mapa de las funciones de inicialización por pestaña. */
 const INIT_VIEWS = {
   inventory: initInventoryView,
+  products: initProductsView,
   tasks: initTasksView,
   pqrs: initPqrsView,
   admin: initAdminView,
+  users: initUsersView,
 };
 
 /**

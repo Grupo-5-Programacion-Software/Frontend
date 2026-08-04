@@ -34,22 +34,24 @@
         </div>
         <nav class="tabs-nav">
           <button class="tab active" data-tab="inventory">Inventario</button>
+          <button class="tab" data-tab="products">Productos</button>
           <button class="tab" data-tab="tasks">Tareas</button>
           <button class="tab" data-tab="pqrs">PQRS</button>
           <button class="tab" data-tab="admin">Administración</button>
+          <button class="tab" data-tab="users">Usuarios</button>
         </nav>
       </header>
 
       <main>
       <!-- ==========================================================
            SECCIÓN: INVENTARIO
-           Gestiona categorías y productos (CRUD completo).
+           Gestiona las categorías (CRUD completo).
+           Los productos viven en su propia pestaña.
            ========================================================== -->
       <section id="inventory-section" class="section active">
         <div class="section-card">
-          <h2>Inventario</h2>
+          <h2>Inventario de Categorías</h2>
 
-          <h3>Categorías</h3>
           <div class="actions">
             <input type="text" id="category-name" placeholder="Nombre de la categoría">
             <button id="add-category">Agregar</button>
@@ -64,8 +66,16 @@
             </thead>
             <tbody id="categories-body"></tbody>
           </table>
+        </div>
+      </section>
 
-          <h3>Productos</h3>
+      <!-- ==========================================================
+           SECCIÓN: PRODUCTOS
+           CRUD de productos vinculados a una categoría.
+           ========================================================== -->
+      <section id="products-section" class="section">
+        <div class="section-card">
+          <h2>Gestión de Productos</h2>
           <div class="actions">
             <input type="text" id="product-name" placeholder="Nombre del producto">
             <input type="number" id="product-price" placeholder="Precio">
@@ -173,6 +183,34 @@
               <p>PQRS recibidas</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SECCIÓN: USUARIOS
+           Registro, edición y eliminación de usuarios (solo Admin).
+           ========================================================== -->
+      <section id="users-section" class="section">
+        <div class="section-card">
+          <h2>Gestión de Usuarios</h2>
+          <div class="actions">
+            <input type="text" id="user-name" placeholder="Nombre completo">
+            <input type="email" id="user-email" placeholder="Correo electrónico">
+            <input type="password" id="user-password" placeholder="Contraseña (opcional)">
+            <button id="add-user">Agregar</button>
+          </div>
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Registro</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="users-body"></tbody>
+          </table>
         </div>
       </section>
       </main>
