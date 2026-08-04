@@ -23,6 +23,33 @@ comunicándose con el backend a través de peticiones `fetch`.
 
 ---
 
+## 🔐 Inicio de sesión
+
+La aplicación incluye una pantalla de login **simulada en el frontend**
+(no requiere autenticación en el backend). Las credenciales se validan en
+el navegador y la sesión se conserva en `localStorage`.
+
+### Usuarios de demostración
+
+| Correo | Contraseña | Rol | Pestañas visibles |
+|--------|-----------|-----|-------------------|
+| `lulizcano.aa@hotmail.com` | `cambiar123` | Admin | Inventario, Tareas, PQRS, Administración |
+| `prueba@gmail.com` | `cambiar123` | Inventario | Inventario, Tareas |
+| `juan@gmail.com` | `cambiar123` | Vendedor | PQRS |
+
+### Comportamiento
+
+- Credenciales incorrectas muestran una notificación de error.
+- Al iniciar sesión solo se muestran (e inicializan) las pestañas
+  permitidas para el rol autenticado.
+- La sesión persiste al recargar la página.
+- El botón **Salir** cierra la sesión y devuelve a la pantalla de login.
+
+La lógica está en `src/services/auth.js` (validación y acceso por rol) y
+`src/views/authView.js` (pantalla de login y botón de salida).
+
+---
+
 ## 🏗️ Arquitectura y estructura del proyecto
 
 Organización modular por capas para facilitar el mantenimiento:
@@ -33,6 +60,7 @@ Organización modular por capas para facilitar el mantenimiento:
 │   ├── services/               # Lógica de consumo de datos o APIs
 │   │   ├── api.js              # Wrapper de fetch (GET, POST, PUT, PATCH, DELETE)
 │   │   ├── config.js           # URL base de la API (desde .env)
+│   │   ├── auth.js             # Login simulado y control de acceso por rol
 │   │   ├── inventoryApi.js     # Peticiones de categorías y productos
 │   │   ├── usersApi.js         # Peticiones de usuarios
 │   │   ├── tasksApi.js         # Peticiones de tareas
@@ -43,6 +71,7 @@ Organización modular por capas para facilitar el mantenimiento:
 │   │   ├── pqrsUI.js
 │   │   └── adminUI.js
 │   ├── views/                  # Coordinación de eventos por módulo
+│   │   ├── authView.js         # Pantalla de login y botón Salir
 │   │   ├── inventoryView.js
 │   │   ├── tasksView.js
 │   │   ├── pqrsView.js

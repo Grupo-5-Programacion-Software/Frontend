@@ -7,9 +7,27 @@
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-  <div id="app">
+  <!-- Pantalla de inicio de sesión -->
+  <section id="login-section" class="section active">
+    <div class="login-card">
+      <h2>Iniciar Sesión</h2>
+      <p class="login-subtitulo">Sistema Integral de Gestión</p>
+      <input type="email" id="login-email" placeholder="Correo electrónico" autocomplete="email">
+      <input type="password" id="login-password" placeholder="Contraseña" autocomplete="current-password">
+      <button id="login-btn">Ingresar</button>
+    </div>
+  </section>
+
+  <div id="app" class="oculto">
     <header>
-      <h1>Sistema Integral de Gestión</h1>
+      <div class="header-titulo">
+        <h1>Sistema Integral de Gestión</h1>
+      </div>
+      <div id="user-info">
+        <span id="user-name"></span>
+        <span id="user-role"></span>
+        <button id="logout-btn">Salir</button>
+      </div>
       <nav>
         <button class="tab active" data-tab="inventory">Inventario</button>
         <button class="tab" data-tab="tasks">Tareas</button>
