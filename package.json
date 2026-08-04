@@ -1,0 +1,22 @@
+{
+  "name": "frontend-sistema-integral",
+  "version": "1.0.0",
+  "description": "Sistema integral de gestion: inventario, tareas, PQRS y panel administrativo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "sena",
+    "vite",
+    "javascript",
+    "frontend"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

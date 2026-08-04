@@ -1,0 +1,12 @@
+# Dependencias y artefactos de construcción
+node_modules/
+dist/
+
+# Variables de entorno (pueden contener secretos)
+.env
+.env.local
+
+# Archivos del sistema operativo y del editor
+.DS_Store
+Thumbs.db
+.vscode/
