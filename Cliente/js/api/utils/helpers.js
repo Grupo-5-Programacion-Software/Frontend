@@ -53,12 +53,13 @@ export function mostrarConfirmacion(mensaje) {
     overlay.className = 'modal-overlay';
     overlay.innerHTML = `
       <div class="modal-confirmacion">
-        <p>${mensaje}</p>
+        <p></p>
         <div class="modal-acciones">
           <button class="btn-cancelar">Cancelar</button>
           <button class="btn-confirmar">Eliminar</button>
         </div>
       </div>`;
+    overlay.querySelector('p').textContent = mensaje;
     document.body.appendChild(overlay);
 
     overlay.querySelector('.btn-confirmar').onclick = () => {
