@@ -36,5 +36,23 @@
     { "id": 8, "postId": 7, "name": "Comentario 8", "body": "PATCH es más eficiente." },
     { "id": 9, "postId": 8, "name": "Comentario 9", "body": "DELETE debe usarse con cuidado." },
     { "id": 10, "postId": 9, "name": "Comentario 10", "body": "Los códigos HTTP son importantes." }
+  ],
+
+  "categories": [
+    { "id": 1, "name": "Bebidas" },
+    { "id": 2, "name": "Snacks" },
+    { "id": 3, "name": "Lácteos" },
+    { "id": 4, "name": "Granos" }
+  ],
+
+  "products": [
+    { "id": 1, "name": "Agua mineral", "price": 1500, "categoryId": 1 },
+    { "id": 2, "name": "Jugo de naranja", "price": 3800, "categoryId": 1 },
+    { "id": 3, "name": "Papas fritas", "price": 4200, "categoryId": 2 },
+    { "id": 4, "name": "Empanadas", "price": 2800, "categoryId": 2 },
+    { "id": 5, "name": "Leche entera", "price": 3900, "categoryId": 3 },
+    { "id": 6, "name": "Queso crema", "price": 5200, "categoryId": 3 },
+    { "id": 7, "name": "Arroz", "price": 3400, "categoryId": 4 },
+    { "id": 8, "name": "Lentejas", "price": 2900, "categoryId": 4 }
   ]
 }
