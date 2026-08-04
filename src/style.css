@@ -1,64 +1,121 @@
+/* ============================================================
+   HOJA DE ESTILOS GLOBAL — SISTEMA INTEGRAL DE GESTIÓN
+   ============================================================
+   Diseño del frontend empaquetado con Vite.
+   Organización por secciones numeradas:
+     1. Variables de diseño          (:root)
+     2. Reset global                 (*)
+     3. Base                         (body, #app, .app-shell)
+     4. Barra superior               (.topbar, .eyebrow, .header-titulo)
+     5. Usuario activo               (.user-info, #user-name, #user-role)
+     6. Navegación por pestañas      (.tabs-nav, .tab)
+     7. Botón de salida              (#logout-btn)
+     8. Utilidad de ocultado         (.oculto)
+     9. Pantalla de login            (#login-section, .login-card)
+    10. Secciones de contenido       (.section, .section-card, h2, h3)
+    11. Barra de acciones            (.actions)
+    12. Campos de formulario         (.actions input, select)
+    13. Botones                      (button, .edit, .delete)
+    14. Tablas                       (table, th, td, td.actions)
+    15. Panel de estadísticas        (.stats, .stat-card)
+    16. Notificaciones               (#notificaciones, .notificacion)
+    17. Modal de confirmación        (.modal-overlay, .modal-confirmacion)
+    18. Indicador de carga           (.loading-spinner, .spinner)
+    19. Estilos responsivos          (@media max-width: 768px)
+
+   Nota: los valores de color, espaciado y sombras se centralizan
+   en las variables de `:root` para mantener la coherencia visual.
+   ============================================================ */
+
+/* ============================================================
+   1. VARIABLES DE DISEÑO (:root)
+   ============================================================
+   Define la paleta de colores, superficies y sombras que se
+   reutilizan en todo el sistema. Cambiar un valor aquí actualiza
+   el tema completo sin tocar cada regla por separado. */
 :root {
-  --bg: #edf2f7;
-  --surface: #ffffff;
-  --surface-soft: #f8fafc;
-  --text: #0f172a;
-  --muted: #64748b;
-  --primary: #2563eb;
-  --primary-strong: #1d4ed8;
-  --accent: #0f766e;
-  --danger: #dc2626;
-  --warning: #d97706;
-  --border: #dbe4f0;
-  --shadow: 0 18px 55px rgba(15, 23, 42, 0.12);
+  --bg: #edf2f7;                 /* Fondo general de la aplicación. */
+  --surface: #ffffff;            /* Superficies principales (tablas, tarjetas). */
+  --surface-soft: #f8fafc;       /* Superficie suave (inputs, fondos secundarios). */
+  --text: #0f172a;               /* Texto principal, casi negro azulado. */
+  --muted: #64748b;              /* Texto secundario o atenuado. */
+  --primary: #2563eb;            /* Color primario (acciones, enlaces, foco). */
+  --primary-strong: #1d4ed8;     /* Variante más oscura para degradados. */
+  --accent: #0f766e;             /* Color de acento (reservado). */
+  --danger: #dc2626;             /* Rojo de errores y acciones destructivas. */
+  --warning: #d97706;            /* Ámbar de advertencias. */
+  --border: #dbe4f0;             /* Color de bordes de inputs y controles. */
+  --shadow: 0 18px 55px rgba(15, 23, 42, 0.12); /* Sombra suave y difusa. */
 }
 
+/* ============================================================
+   2. RESET GLOBAL (*)
+   ============================================================
+   Elimina márgenes y padding por defecto de todos los elementos
+   y aplica `border-box` para que el padding no agrande las cajas. */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ============================================================
+   3. BASE (body, #app, .app-shell)
+   ============================================================ */
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif; /* Tipografía legible del sistema. */
   background:
+    /* Halo radial azul suave en la esquina superior izquierda. */
     radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 22%),
+    /* Degradado vertical de azul muy claro a casi blanco. */
     linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
   color: var(--text);
-  padding: 20px;
+  padding: 20px;                 /* Margen interior alrededor de toda la app. */
 }
 
+/* Contenedor raíz de la aplicación: limita el ancho y centra. */
 #app {
   max-width: 1280px;
   margin: 0 auto;
 }
 
+/* Rejilla que apila los bloques internos con separación uniforme. */
 .app-shell {
   display: grid;
   gap: 18px;
 }
 
+/* ============================================================
+   4. BARRA SUPERIOR (.topbar, .eyebrow, .header-titulo)
+   ============================================================ */
 .topbar {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); /* Azul oscuro a índigo. */
   color: white;
-  border-radius: 22px;
+  border-radius: 22px;           /* Esquinas muy redondeadas. */
   padding: 24px 26px;
   box-shadow: var(--shadow);
 }
 
+/* Etiqueta superior pequeña ("Panel operativo"). */
 .eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-transform: uppercase;     /* Letras mayúsculas. */
+  letter-spacing: 0.08em;        /* Espaciado amplio entre caracteres. */
   font-size: 11px;
-  color: #bfdbfe;
+  color: #bfdbfe;                /* Azul claro sobre fondo oscuro. */
   margin-bottom: 6px;
 }
 
+/* Título principal del encabezado, fluido con el ancho. */
 .header-titulo h1 {
   margin: 0;
-  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-size: clamp(1.4rem, 2vw, 2rem); /* Mínimo 1.4rem, máximo 2rem. */
 }
 
+/* ============================================================
+   5. USUARIO ACTIVO (.user-info, #user-name, #user-role)
+   ============================================================ */
+/* Ficha del usuario logueado: oculta por defecto y visible solo
+   cuando la sesión está activa (el JS aplica `display: flex`). */
 .user-info {
   display: none;
   align-items: center;
@@ -66,16 +123,18 @@ body {
   margin-top: 14px;
   margin-bottom: 18px;
   padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(10px);
-  width: fit-content;
+  border-radius: 999px;          /* Píldora completamente redondeada. */
+  background: rgba(255, 255, 255, 0.12); /* Fondo translúcido sobre el header. */
+  backdrop-filter: blur(10px);   /* Difumina el contenido detrás. */
+  width: fit-content;            /* Ajusta el ancho al contenido. */
 }
 
+/* Nombre del usuario en negrita. */
 #user-name {
   font-weight: 700;
 }
 
+/* Etiqueta del rol: píldora translúcida con borde. */
 #user-role {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.24);
@@ -84,28 +143,38 @@ body {
   font-size: 12px;
 }
 
+/* ============================================================
+   6. NAVEGACIÓN POR PESTAÑAS (.tabs-nav, .tab)
+   ============================================================ */
+/* Contenedor flex que permite envolver las pestañas en móvil. */
 .tabs-nav {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
+/* Cada botón de pestaña. */
 .tab {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08); /* Fondo translúcido sobre el header. */
   color: white;
   border: 1px solid transparent;
   padding: 10px 16px;
   border-radius: 12px;
   font-weight: 700;
-  transition: 0.2s ease;
+  transition: 0.2s ease;         /* Suaviza hover y activación. */
 }
 
+/* Estado activo y hover: fondo más claro + borde visible. */
 .tab:hover,
 .tab.active {
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.26);
 }
 
+/* ============================================================
+   7. BOTÓN DE SALIDA (#logout-btn)
+   ============================================================ */
+/* Sobrescribe el degradado azul del botón genérico por rojo. */
 #logout-btn {
   background: #ef4444;
   padding: 7px 12px;
@@ -113,14 +182,25 @@ body {
   border-radius: 10px;
 }
 
+/* Oscurece el rojo al pasar el cursor. */
 #logout-btn:hover {
   background: #dc2626;
 }
 
+/* ============================================================
+   8. UTILIDAD DE OCULTADO (.oculto)
+   ============================================================
+   Oculta elementos con prioridad máxima (usado por el JS para
+   alternar entre el login y la aplicación). */
 .oculto {
   display: none !important;
 }
 
+/* ============================================================
+   9. PANTALLA DE LOGIN (#login-section, .login-card)
+   ============================================================ */
+/* Contenedor de la pantalla de login: centrado y con altura mínima.
+   Oculta por defecto y se muestra cuando tiene clase `.active`. */
 #login-section {
   display: none;
   align-items: center;
@@ -128,34 +208,39 @@ body {
   min-height: 84vh;
 }
 
+/* Hace visible la pantalla de login. */
 #login-section.active {
   display: flex;
 }
 
+/* Tarjeta centrada con el formulario de acceso. */
 .login-card {
-  background: rgba(255, 255, 255, 0.93);
+  background: rgba(255, 255, 255, 0.93); /* Casi opaco para resaltar. */
   padding: 38px 34px;
   border-radius: 24px;
   box-shadow: var(--shadow);
-  width: min(420px, 92vw);
+  width: min(420px, 92vw);       /* 420px máximo, 92% del ancho en móvil. */
   display: flex;
   flex-direction: column;
   gap: 14px;
   border: 1px solid rgba(148, 163, 184, 0.22);
 }
 
+/* Título de la tarjeta de login. */
 .login-card h2 {
   text-align: center;
   margin-bottom: 4px;
   color: #0f172a;
 }
 
+/* Subtítulo bajo el título ("Sistema Integral de Gestión"). */
 .login-subtitulo {
   text-align: center;
   color: var(--muted);
   margin-bottom: 10px;
 }
 
+/* Campos de correo y contraseña. */
 .login-card input {
   width: 100%;
   padding: 13px 14px;
@@ -165,6 +250,7 @@ body {
   font-size: 14px;
 }
 
+/* Anillo de foco azul para inputs y selects editables. */
 .login-card input:focus,
 .actions input:focus,
 .actions select:focus,
@@ -174,6 +260,7 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
+/* Botón de ingresar: más alto y con peso para destacar. */
 .login-card button {
   padding: 13px 16px;
   border-radius: 12px;
@@ -181,14 +268,20 @@ select:focus {
   font-weight: 700;
 }
 
+/* ============================================================
+   10. SECCIONES DE CONTENIDO (.section, .section-card, h2, h3)
+   ============================================================ */
+/* Cada módulo es una sección oculta; se muestra con `.active`. */
 .section {
   display: none;
 }
 
+/* Sección visible del módulo activo. */
 .section.active {
   display: block;
 }
 
+/* Tarjeta que envuelve el contenido de cada módulo. */
 .section-card {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(203, 213, 225, 0.9);
@@ -197,18 +290,24 @@ select:focus {
   padding: 22px;
 }
 
+/* Título principal de cada módulo. */
 h2 {
   color: #0f172a;
   margin-bottom: 18px;
   font-size: 1.5rem;
 }
 
+/* Subtítulos dentro de los módulos (ej. "Categorías"). */
 h3 {
   color: #1e3a8a;
   margin: 18px 0 12px;
   font-size: 1.05rem;
 }
 
+/* ============================================================
+   11. BARRA DE ACCIONES (.actions)
+   ============================================================
+   Fila de controles (inputs + botones) de los formularios. */
 .actions {
   display: flex;
   gap: 12px;
@@ -216,8 +315,13 @@ h3 {
   flex-wrap: wrap;
 }
 
-input,
-select {
+/* ============================================================
+   12. CAMPOS DE FORMULARIO (.actions input, select)
+   ============================================================ */
+/* Inputs y selects dentro de las barras de acción: crecen para
+   repartirse el espacio y respetan un ancho mínimo usable. */
+.actions input,
+.actions select {
   flex: 1;
   min-width: 145px;
   padding: 11px 12px;
@@ -228,11 +332,16 @@ select {
   color: var(--text);
 }
 
+/* Selectores: fondo blanco y cursor de selección. */
 select {
   background: white;
   cursor: pointer;
 }
 
+/* ============================================================
+   13. BOTONES (button, .edit, .delete)
+   ============================================================ */
+/* Botón genérico: degradado azul primario. */
 button {
   padding: 10px 16px;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
@@ -245,19 +354,32 @@ button {
   transition: transform 0.15s ease, filter 0.2s ease;
 }
 
+/* Hover: aclara el color y eleva ligeramente el botón. */
 button:hover {
   filter: brightness(1.05);
   transform: translateY(-1px);
 }
 
+/* Foco por teclado accesible (no se muestra al hacer clic). */
+button:focus-visible,
+.tab:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Botón de edición: degradado ámbar/naranja. */
 button.edit {
   background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
+/* Botón de eliminación: degradado rojo. */
 button.delete {
   background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
+/* Aclara los botones de edición/eliminación al pasar el cursor. */
 button.edit:hover {
   filter: brightness(1.05);
 }
@@ -266,16 +388,21 @@ button.delete:hover {
   filter: brightness(1.05);
 }
 
+/* ============================================================
+   14. TABLAS (table, th, td, td.actions)
+   ============================================================ */
+/* Tabla con esquinas redondeadas y sombra sutil. */
 table {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: separate;     /* Permite radios en las esquinas. */
   border-spacing: 0;
   background: var(--surface);
   border-radius: 16px;
-  overflow: hidden;
+  overflow: hidden;              /* Recorta el contenido en las esquinas. */
   box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
 }
 
+/* Celdas de cabecera y cuerpo con separación y alineación común. */
 th,
 td {
   padding: 14px 12px;
@@ -283,6 +410,7 @@ td {
   border-bottom: 1px solid #e5e7eb;
 }
 
+/* Cabecera de tabla: fondo azul muy claro y texto índigo. */
 th {
   background: #eff6ff;
   color: #1e3a8a;
@@ -291,22 +419,34 @@ th {
   letter-spacing: 0.03em;
 }
 
+/* Cuerpo de tabla: texto principal. */
 td {
   color: #0f172a;
 }
 
+/* Columna de acciones (botones Editar/Eliminar) en línea.
+   Se evita `display: flex` en la celda para no romper el layout
+   de la tabla; los botones se separan con margen. */
 td.actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  white-space: nowrap;           /* Evita que los botones se partan. */
 }
 
+/* Separación entre botones de acción adyacentes. */
+td.actions button + button {
+  margin-left: 8px;
+}
+
+/* ============================================================
+   15. PANEL DE ESTADÍSTICAS (.stats, .stat-card)
+   ============================================================ */
+/* Rejilla adaptativa de tarjetas de estadísticas. */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
 }
 
+/* Tarjeta individual de métrica. */
 .stat-card {
   background: linear-gradient(180deg, #ffffff, #f8fbff);
   border: 1px solid #dbeafe;
@@ -316,18 +456,24 @@ td.actions {
   box-shadow: 0 12px 32px rgba(37, 99, 235, 0.08);
 }
 
+/* Número grande de la métrica en color primario. */
 .stat-card h3 {
   font-size: 2.6rem;
   color: var(--primary);
   margin: 0;
 }
 
+/* Etiqueta descriptiva debajo del número. */
 .stat-card p {
   color: var(--muted);
   margin-top: 8px;
   font-weight: 600;
 }
 
+/* ============================================================
+   16. NOTIFICACIONES (#notificaciones, .notificacion)
+   ============================================================ */
+/* Contenedor fijo en la esquina superior derecha. */
 #notificaciones {
   position: fixed;
   top: 20px;
@@ -338,6 +484,7 @@ td.actions {
   gap: 10px;
 }
 
+/* Aviso individual: entrada animada desde la derecha. */
 .notificacion {
   padding: 12px 18px;
   border-radius: 12px;
@@ -348,14 +495,17 @@ td.actions {
   min-width: 250px;
 }
 
+/* Aviso de error (rojo). */
 .notificacion-error {
   background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
+/* Aviso de éxito (verde). */
 .notificacion-exito {
   background: linear-gradient(135deg, #10b981, #047857);
 }
 
+/* Animación de entrada deslizándose desde la derecha. */
 @keyframes slideIn {
   from {
     transform: translateX(30px);
@@ -367,6 +517,10 @@ td.actions {
   }
 }
 
+/* ============================================================
+   17. MODAL DE CONFIRMACIÓN (.modal-overlay, .modal-confirmacion)
+   ============================================================ */
+/* Fondo oscuro translúcido que cubre toda la pantalla. */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -374,10 +528,11 @@ td.actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
+  z-index: 1001;                 /* Por encima de las notificaciones. */
   padding: 15px;
 }
 
+/* Diálogo de confirmación centrado. */
 .modal-confirmacion {
   background: white;
   padding: 28px;
@@ -388,26 +543,34 @@ td.actions {
   width: 100%;
 }
 
+/* Pregunta mostrada al usuario. */
 .modal-confirmacion p {
   margin-bottom: 18px;
   font-size: 16px;
   color: var(--text);
 }
 
+/* Fila de botones del diálogo. */
 .modal-acciones {
   display: flex;
   gap: 10px;
   justify-content: center;
 }
 
+/* Botón "Cancelar": gris neutro. */
 .btn-cancelar {
   background: linear-gradient(135deg, #94a3b8, #64748b);
 }
 
+/* Botón "Eliminar": rojo (acción destructiva). */
 .btn-confirmar {
   background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
+/* ============================================================
+   18. INDICADOR DE CARGA (.loading-spinner, .spinner)
+   ============================================================ */
+/* Capa translúcida que cubre la pantalla durante las cargas. */
 .loading-spinner {
   position: fixed;
   inset: 0;
@@ -418,6 +581,7 @@ td.actions {
   z-index: 999;
 }
 
+/* Círculo que gira: borde inferior azul sobre borde claro. */
 .spinner {
   width: 48px;
   height: 48px;
@@ -427,40 +591,64 @@ td.actions {
   animation: spin 0.8s linear infinite;
 }
 
+/* Rotación continua del spinner. */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
+/* ============================================================
+   19. ESTILOS RESPONSIVOS (@media max-width: 768px)
+   ============================================================
+   Ajustes para pantallas pequeñas (tablets y móviles). */
 @media (max-width: 768px) {
+  /* Reduce el margen exterior en pantallas pequeñas. */
   body {
     padding: 12px;
   }
 
+  /* Apila los controles de la barra de acciones verticalmente. */
   .actions {
     flex-direction: column;
   }
 
-  input,
-  select {
+  /* Los campos ocupan el ancho completo disponible. */
+  .actions input,
+  .actions select {
     min-width: 100%;
   }
 
+  /* Permite desplazamiento horizontal en tablas anchas
+     (ej. la de tareas con 6 columnas) en lugar de desbordar. */
   table {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
     font-size: 14px;
   }
 
+  /* Reduce el espaciado interno de las celdas. */
   th,
   td {
     padding: 8px;
   }
 
+  /* En móvil la columna de acciones apila sus botones. */
   td.actions {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
   }
 
+  /* Elimina el margen lateral que separa botones en línea. */
+  td.actions button + button {
+    margin-left: 0;
+  }
+
+  /* Botones a ancho completo en pantallas pequeñas. */
   button {
     width: 100%;
   }
