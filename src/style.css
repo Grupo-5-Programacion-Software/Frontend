@@ -339,6 +339,28 @@ select {
 }
 
 /* ============================================================
+   12.1. BARRA DE FILTROS (.filters)
+   ============================================================
+   Fila de selectores para filtrar las tablas (estado, usuario...):
+   controles compactos que no compiten con el formulario. */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  min-width: 190px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* ============================================================
    13. BOTONES (button, .edit, .delete)
    ============================================================ */
 /* Botón genérico: degradado azul primario. */
@@ -616,6 +638,15 @@ td.actions button + button {
   /* Los campos ocupan el ancho completo disponible. */
   .actions input,
   .actions select {
+    min-width: 100%;
+  }
+
+  /* Los filtros también se apilan y ocupan el ancho completo. */
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters select {
     min-width: 100%;
   }
 

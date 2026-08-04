@@ -63,3 +63,20 @@ export function cargarSelectUsuarios(usuarios) {
     select.innerHTML += `<option value="${u.id}">${escaparHTML(u.name)}</option>`;
   });
 }
+
+/**
+ * Llena el selector de filtro por usuario asignado.
+ * Conserva la opción previamente seleccionada para que el
+ * filtro no se reinicie cuando se recargan las tareas.
+ */
+export function cargarSelectFiltroUsuarios(usuarios) {
+  const select = document.getElementById("filter-task-user");
+  const seleccionAnterior = select.value;
+  select.innerHTML = '<option value="">Todos los usuarios</option>';
+  usuarios.forEach((u) => {
+    select.innerHTML += `<option value="${u.id}">${escaparHTML(u.name)}</option>`;
+  });
+  if (seleccionAnterior) {
+    select.value = seleccionAnterior;
+  }
+}

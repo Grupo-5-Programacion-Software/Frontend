@@ -21,6 +21,7 @@ import { obtenerUsuarios } from "../services/usersApi.js";
 import {
   renderizarTablaTareas,
   cargarSelectUsuarios,
+  cargarSelectFiltroUsuarios,
 } from "../ui/tasksUI.js";
 import {
   mostrarNotificacion,
@@ -29,6 +30,26 @@ import {
 } from "../utils/helpers.js";
 
 let editingTaskId = null;
+let todasLasTareas = [];
+let usuariosCargados = [];
+
+/**
+ * Aplica los filtros de estado y usuario asignado sobre las
+ * tareas cargadas y vuelve a pintar la tabla con el resultado.
+ */
+function aplicarFiltros() {
+  const estado = document.getElementById("filter-task-status").value;
+  const usuarioId = document.getElementById("filter-task-user").value;
+
+  const tareasFiltradas = todasLasTareas.filter((tarea) => {
+    const cumpleEstado = !estado || tarea.status === estado;
+    const cumpleUsuario =
+      !usuarioId || String(tarea.userId) === String(usuarioId);
+    return cumpleEstado && cumpleUsuario;
+  });
+
+  renderizarTablaTareas(tareasFiltradas, usuariosCargados);
+}
 
 /** Carga tareas y usuarios, y refresca la vista completa. */
 async function cargarTareas() {
@@ -38,13 +59,22 @@ async function cargarTareas() {
       obtenerTareas(),
       obtenerUsuarios(),
     ]);
-    renderizarTablaTareas(tareas, usuarios);
+    todasLasTareas = tareas;
+    usuariosCargados = usuarios;
     cargarSelectUsuarios(usuarios);
+    cargarSelectFiltroUsuarios(usuarios);
+    aplicarFiltros();
   } catch (error) {
     mostrarNotificacion("Error al cargar tareas: " + error.message);
   } finally {
     mostrarCargando(false);
   }
+}
+
+/** Enlaza los filtros de la tabla (estado y usuario asignado). */
+function setupFiltros() {
+  document.getElementById("filter-task-status").addEventListener("change", aplicarFiltros);
+  document.getElementById("filter-task-user").addEventListener("change", aplicarFiltros);
 }
 
 /** Enlaza el formulario de creación/actualización de tareas. */
@@ -138,5 +168,6 @@ function setupTabla() {
 export function initTasksView() {
   setupFormulario();
   setupTabla();
+  setupFiltros();
   cargarTareas();
 }
