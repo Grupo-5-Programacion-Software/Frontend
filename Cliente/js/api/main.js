@@ -67,6 +67,7 @@ async function cargarProductos() {
       obtenerProductos(),
       obtenerCategorias()
     ]);
+    renderizarTablaCategorias(categorias);
     renderizarTablaProductos(productos, categorias);
     cargarSelectCategorias(categorias);
   } catch (error) {
@@ -127,21 +128,21 @@ document.getElementById('categories-body').addEventListener('click', async (e) =
 // Gestiona el registro y actualización de productos.
 document.getElementById('add-product').addEventListener('click', async () => {
   const name = document.getElementById('product-name').value.trim();
-  const price = document.getElementById('product-price').value.trim();
+  const price = Number(document.getElementById('product-price').value.trim());
   const categoryId = document.getElementById('product-category').value;
 
-  if (!name || !price || !categoryId) {
-    return mostrarNotificacion('Nombre, precio y categoría son obligatorios');
+  if (!name || !categoryId || isNaN(price) || price < 0) {
+    return mostrarNotificacion('Nombre, categoría y un precio válido son obligatorios');
   }
 
   try {
     if (editingProductId) {
-      await actualizarProducto(editingProductId, { name, price: Number(price), categoryId: Number(categoryId) });
+      await actualizarProducto(editingProductId, { name, price, categoryId: Number(categoryId) });
       editingProductId = null;
       document.getElementById('add-product').textContent = 'Agregar';
       mostrarNotificacion('Producto actualizado correctamente', 'exito');
     } else {
-      await crearProducto({ name, price: Number(price), categoryId: Number(categoryId) });
+      await crearProducto({ name, price, categoryId: Number(categoryId) });
       mostrarNotificacion('Producto creado correctamente', 'exito');
     }
     document.getElementById('product-name').value = '';
@@ -186,6 +187,5 @@ document.getElementById('products-body').addEventListener('click', async (e) => 
   }
 });
 
-// Inicializa la aplicación cargando las categorías y productos disponibles.
-cargarCategorias();
+// Inicializa la aplicación cargando categorías y productos en una sola petición.
 cargarProductos();
