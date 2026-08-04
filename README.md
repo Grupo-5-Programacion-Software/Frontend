@@ -77,9 +77,21 @@ git clone [URL-del-repositorio-grupal]
 # Paso 2. Instalar dependencias
 npm install
 
-# Paso 3. Ejecutar el servidor local
+# Paso 3. Ejecutar el servidor de desarrollo (Vite)
 npm run dev
 ```
+
+### Empaquetado con Vite
+
+El proyecto usa **Vite** como empaquetador:
+
+- `npm run dev`  -> servidor de desarrollo con recarga en caliente.
+- `npm run build`-> genera la versión de producción en `dist/`.
+- `npm run preview` -> sirve localmente el build generado.
+
+En desarrollo, Vite redirige (`proxy`) las peticiones que empiezan por
+`/api` hacia el backend de Express en `http://localhost:3000`, evitando
+errores de CORS. La URL base se configura en `.env` (`VITE_API_BASE_URL`).
 
 ### El "por que"
 
@@ -93,18 +105,36 @@ Mantenemos una organización modular para facilitar el mantenimiento:
 /
 ├── .github/              # Motor de plantillas (Issues y Pull Requests)
 ├── docs/                 # Guías metodológicas y reportes técnicos
-├── public/               # Recursos estáticos (imágenes, iconos)
 ├── src/                  # Código fuente principal
-│   ├── assets/           # Estilos globales y multimedia
-│   ├── components/       # Piezas de interfaz reutilizables (UI)
 │   ├── services/         # Lógica de consumo de datos o APIs
-│   ├── views/            # Secciones o páginas principales
-│   └── main.js           # Punto de entrada de la aplicación
+│   ├── ui/               # Renderizado de tablas y selectores (DOM)
+│   ├── views/            # Coordinación de eventos por módulo
+│   ├── utils/            # Funciones auxiliares reutilizables
+│   ├── main.js           # Punto de entrada de la aplicación
+│   └── style.css         # Estilos globales
 ├── .gitignore            # Archivos que Git debe ignorar
+├── .env                  # Variables de entorno del frontend
+├── index.html            # Vista raíz (entrada de Vite)
 ├── package.json          # Dependencias y scripts del proyecto
 ├── README.md             # Manual principal del repositorio
 └── TEAM_AGREEMENT.md     # Acuerdo y normas de convivencia del equipo
 ```
+
+### Separación de responsabilidades
+
+| Capa | Responsabilidad |
+|------|-----------------|
+| `services/` | Realiza las peticiones HTTP (fetch) hacia la API. |
+| `ui/` | Pinta los datos en el DOM (tablas, selectores). |
+| `views/` | Enlaza los eventos y orquesta services + ui. |
+| `utils/` | Helpers genéricos (XSS, notificaciones, modales). |
+
+### Módulos del sistema
+
+- **Inventario:** CRUD de categorías y productos.
+- **Tareas:** CRUD de tareas con asignación a usuarios y cambio de estado.
+- **PQRS:** gestión de peticiones, quejas, reclamos y sugerencias.
+- **Administración:** panel con estadísticas globales.
 
 ## METODOLOGÍA DE TRABAJO (GITFLOW PROFESIONAL)
 
