@@ -19,68 +19,74 @@
   </section>
 
   <div id="app" class="oculto">
-    <header>
-      <div class="header-titulo">
-        <h1>Sistema Integral de Gestión</h1>
-      </div>
-      <div id="user-info">
-        <span id="user-name"></span>
-        <span id="user-role"></span>
-        <button id="logout-btn">Salir</button>
-      </div>
-      <nav>
-        <button class="tab active" data-tab="inventory">Inventario</button>
-        <button class="tab" data-tab="tasks">Tareas</button>
-        <button class="tab" data-tab="pqrs">PQRS</button>
-        <button class="tab" data-tab="admin">Administración</button>
-      </nav>
-    </header>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="header-titulo">
+          <div>
+            <p class="eyebrow">Panel operativo</p>
+            <h1>Sistema Integral de Gestión</h1>
+          </div>
+        </div>
+        <div id="user-info" class="user-info">
+          <span id="user-name"></span>
+          <span id="user-role"></span>
+          <button id="logout-btn">Salir</button>
+        </div>
+        <nav class="tabs-nav">
+          <button class="tab active" data-tab="inventory">Inventario</button>
+          <button class="tab" data-tab="tasks">Tareas</button>
+          <button class="tab" data-tab="pqrs">PQRS</button>
+          <button class="tab" data-tab="admin">Administración</button>
+        </nav>
+      </header>
 
-    <main>
+      <main>
       <!-- ==========================================================
            SECCIÓN: INVENTARIO
            Gestiona categorías y productos (CRUD completo).
            ========================================================== -->
       <section id="inventory-section" class="section active">
-        <h2>Inventario</h2>
+        <div class="section-card">
+          <h2>Inventario</h2>
 
-        <h3>Categorías</h3>
-        <div class="actions">
-          <input type="text" id="category-name" placeholder="Nombre de la categoría">
-          <button id="add-category">Agregar</button>
-        </div>
-        <table id="categories-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="categories-body"></tbody>
-        </table>
+          <h3>Categorías</h3>
+          <div class="actions">
+            <input type="text" id="category-name" placeholder="Nombre de la categoría">
+            <button id="add-category">Agregar</button>
+          </div>
+          <table id="categories-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="categories-body"></tbody>
+          </table>
 
-        <h3>Productos</h3>
-        <div class="actions">
-          <input type="text" id="product-name" placeholder="Nombre del producto">
-          <input type="number" id="product-price" placeholder="Precio">
-          <select id="product-category">
-            <option value="">Seleccionar categoría</option>
-          </select>
-          <button id="add-product">Agregar</button>
+          <h3>Productos</h3>
+          <div class="actions">
+            <input type="text" id="product-name" placeholder="Nombre del producto">
+            <input type="number" id="product-price" placeholder="Precio">
+            <select id="product-category">
+              <option value="">Seleccionar categoría</option>
+            </select>
+            <button id="add-product">Agregar</button>
+          </div>
+          <table id="products-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="products-body"></tbody>
+          </table>
         </div>
-        <table id="products-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Categoría</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="products-body"></tbody>
-        </table>
       </section>
 
       <!-- ==========================================================
@@ -88,28 +94,30 @@
            CRUD de tareas con asignación a un usuario.
            ========================================================== -->
       <section id="tasks-section" class="section">
-        <h2>Gestión de Tareas</h2>
-        <div class="actions">
-          <input type="text" id="task-title" placeholder="Título de la tarea">
-          <input type="text" id="task-description" placeholder="Descripción">
-          <select id="task-user">
-            <option value="">Asignar a usuario</option>
-          </select>
-          <button id="add-task">Agregar</button>
+        <div class="section-card">
+          <h2>Gestión de Tareas</h2>
+          <div class="actions">
+            <input type="text" id="task-title" placeholder="Título de la tarea">
+            <input type="text" id="task-description" placeholder="Descripción">
+            <select id="task-user">
+              <option value="">Asignar a usuario</option>
+            </select>
+            <button id="add-task">Agregar</button>
+          </div>
+          <table id="tasks-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tasks-body"></tbody>
+          </table>
         </div>
-        <table id="tasks-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Título</th>
-              <th>Descripción</th>
-              <th>Estado</th>
-              <th>Usuario</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tasks-body"></tbody>
-        </table>
       </section>
 
       <!-- ==========================================================
@@ -117,29 +125,31 @@
            Peticiones, quejas, reclamos y sugerencias.
            ========================================================== -->
       <section id="pqrs-section" class="section">
-        <h2>Gestión de PQRS</h2>
-        <div class="actions">
-          <select id="pqrs-type">
-            <option value="peticion">Petición</option>
-            <option value="queja">Queja</option>
-            <option value="reclamo">Reclamo</option>
-            <option value="sugerencia">Sugerencia</option>
-          </select>
-          <input type="text" id="pqrs-description" placeholder="Describe tu solicitud">
-          <button id="add-pqrs">Enviar</button>
+        <div class="section-card">
+          <h2>Gestión de PQRS</h2>
+          <div class="actions">
+            <select id="pqrs-type">
+              <option value="peticion">Petición</option>
+              <option value="queja">Queja</option>
+              <option value="reclamo">Reclamo</option>
+              <option value="sugerencia">Sugerencia</option>
+            </select>
+            <input type="text" id="pqrs-description" placeholder="Describe tu solicitud">
+            <button id="add-pqrs">Enviar</button>
+          </div>
+          <table id="pqrs-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="pqrs-body"></tbody>
+          </table>
         </div>
-        <table id="pqrs-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="pqrs-body"></tbody>
-        </table>
       </section>
 
       <!-- ==========================================================
@@ -147,23 +157,26 @@
            Resumen estadístico del sistema.
            ========================================================== -->
       <section id="admin-section" class="section">
-        <h2>Panel Administrativo</h2>
-        <div class="stats">
-          <div class="stat-card">
-            <h3 id="stat-users">0</h3>
-            <p>Usuarios registrados</p>
-          </div>
-          <div class="stat-card">
-            <h3 id="stat-tasks">0</h3>
-            <p>Tareas creadas</p>
-          </div>
-          <div class="stat-card">
-            <h3 id="stat-pqrs">0</h3>
-            <p>PQRS recibidas</p>
+        <div class="section-card">
+          <h2>Panel Administrativo</h2>
+          <div class="stats">
+            <div class="stat-card">
+              <h3 id="stat-users">0</h3>
+              <p>Usuarios registrados</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="stat-tasks">0</h3>
+              <p>Tareas creadas</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="stat-pqrs">0</h3>
+              <p>PQRS recibidas</p>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </div>
   </div>
 
   <!-- Punto de entrada: Vite lo procesa y empaqueta todo el árbol de módulos -->

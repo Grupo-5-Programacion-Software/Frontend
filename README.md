@@ -1,263 +1,133 @@
 # Sistema Integral de Gestión - Frontend
 
-**Software Factory SENA · Metodología "Del Requerimiento al Producto"**
+Frontend de una SPA construida con Vite y JavaScript modular para gestionar inventario, tareas, PQRS y panel administrativo.
 
-Frontend del sistema de gestión construido con **Vite + JavaScript modular**.
-Incluye los módulos de **Inventario, Tareas, PQRS y Panel Administrativo**,
-que consumen la API REST del backend (Express + MySQL).
+## 1. Qué hace este proyecto
 
----
+La aplicación permite:
 
-## 🧭 Descripción del sistema
+- administrar categorías y productos,
+- gestionar tareas con asignación a usuarios,
+- registrar y actualizar PQRS,
+- consultar estadísticas generales en el panel administrativo.
 
-Aplicación web de una sola página (SPA) organizada en pestañas. Cada módulo
-permite listar, crear, actualizar y eliminar registros de forma visual,
-comunicándose con el backend a través de peticiones `fetch`.
+La interfaz está organizada en pestañas y se apoya en una arquitectura modular por capas:
 
-| Pestaña | Módulo | Qué permite hacer |
-|---------|--------|-------------------|
-| Inventario | Categorías y productos | CRUD de categorías y productos (con precio y stock) |
-| Tareas | Asignación de tareas | CRUD de tareas con usuario asignado y cambio de estado |
-| PQRS | Solicitudes ciudadanas | Enviar y gestionar peticiones, quejas, reclamos y sugerencias |
-| Administración | Panel de estadísticas | Conteos globales de usuarios, tareas y PQRS |
+- services: consume la API o usa una capa local de respaldo para demo.
+- ui: renderiza tablas y selectores.
+- views: orquesta la interacción entre servicios y DOM.
+- utils: reutiliza helpers para notificaciones, confirmación y escape HTML.
 
----
+## 2. Flujo real de funcionamiento
 
-## 🔐 Inicio de sesión
+La app inicia con una pantalla de login simulada en frontend. Las credenciales se validan localmente con `localStorage`, y según el rol del usuario se muestran solo las pestañas permitidas.
 
-La aplicación incluye una pantalla de login **simulada en el frontend**
-(no requiere autenticación en el backend). Las credenciales se validan en
-el navegador y la sesión se conserva en `localStorage`.
-
-### Usuarios de demostración
+Usuarios de demostración:
 
 | Correo | Contraseña | Rol | Pestañas visibles |
-|--------|-----------|-----|-------------------|
-| `lulizcano.aa@hotmail.com` | `cambiar123` | Admin | Inventario, Tareas, PQRS, Administración |
-| `prueba@gmail.com` | `cambiar123` | Inventario | Inventario, Tareas |
-| `juan@gmail.com` | `cambiar123` | Vendedor | PQRS |
+|---|---|---|---|
+| lulizcano.aa@hotmail.com | cambiar123 | Admin | Inventario, Tareas, PQRS, Administración |
+| prueba@gmail.com | cambiar123 | Inventario | Inventario, Tareas |
+| juan@gmail.com | cambiar123 | Vendedor | PQRS |
 
-### Comportamiento
+## 3. Estructura actual
 
-- Credenciales incorrectas muestran una notificación de error.
-- Al iniciar sesión solo se muestran (e inicializan) las pestañas
-  permitidas para el rol autenticado.
-- La sesión persiste al recargar la página.
-- El botón **Salir** cierra la sesión y devuelve a la pantalla de login.
-
-La lógica está en `src/services/auth.js` (validación y acceso por rol) y
-`src/views/authView.js` (pantalla de login y botón de salida).
-
----
-
-## 🏗️ Arquitectura y estructura del proyecto
-
-Organización modular por capas para facilitar el mantenimiento:
-
-```
-/
-├── src/                        # Código fuente principal
-│   ├── services/               # Lógica de consumo de datos o APIs
-│   │   ├── api.js              # Wrapper de fetch (GET, POST, PUT, PATCH, DELETE)
-│   │   ├── config.js           # URL base de la API (desde .env)
-│   │   ├── auth.js             # Login simulado y control de acceso por rol
-│   │   ├── inventoryApi.js     # Peticiones de categorías y productos
-│   │   ├── usersApi.js         # Peticiones de usuarios
-│   │   ├── tasksApi.js         # Peticiones de tareas
-│   │   └── pqrsApi.js          # Peticiones de solicitudes PQRS
-│   ├── ui/                     # Renderizado de tablas y selectores (DOM)
-│   │   ├── inventoryUI.js
-│   │   ├── tasksUI.js
-│   │   ├── pqrsUI.js
-│   │   └── adminUI.js
-│   ├── views/                  # Coordinación de eventos por módulo
-│   │   ├── authView.js         # Pantalla de login y botón Salir
-│   │   ├── inventoryView.js
-│   │   ├── tasksView.js
-│   │   ├── pqrsView.js
-│   │   └── adminView.js
-│   ├── utils/                  # Funciones auxiliares reutilizables
-│   │   └── helpers.js          # Notificaciones, confirmaciones, XSS
-│   ├── main.js                 # Punto de entrada de la aplicación
-│   └── style.css               # Estilos globales
-├── .github/                    # Motor de plantillas (Issues y Pull Requests)
-├── docs/                       # Guías metodológicas y reportes técnicos
-├── .gitignore                  # Archivos que Git debe ignorar
-├── .env.example                # Plantilla de variables de entorno
-├── index.html                  # Vista raíz (entrada de Vite)
-├── package.json                # Dependencias y scripts del proyecto
-├── vite.config.js              # Configuración de Vite (build + proxy /api)
-└── README.md                   # Manual principal del repositorio
+```text
+src/
+├── main.js                # Punto de entrada de la aplicación
+├── style.css              # Estilos globales y rediseño visual
+├── services/
+│   ├── api.js              # Wrapper HTTP + respaldo local para demo
+│   ├── auth.js             # Login simulado y control por rol
+│   ├── config.js           # URL de la API desde VITE_API_BASE_URL
+│   ├── inventoryApi.js     # CRUD de categorías y productos
+│   ├── usersApi.js         # CRUD de usuarios
+│   ├── tasksApi.js         # CRUD de tareas
+│   └── pqrsApi.js          # CRUD de PQRS
+├── ui/
+│   ├── inventoryUI.js      # Render tabla de inventario
+│   ├── tasksUI.js          # Render tabla de tareas
+│   ├── pqrsUI.js           # Render tabla de PQRS
+│   └── adminUI.js          # Render estadísticas
+├── views/
+│   ├── authView.js         # Login / logout / sesión
+│   ├── inventoryView.js    # Lógica del módulo inventario
+│   ├── tasksView.js        # Lógica del módulo tareas
+│   ├── pqrsView.js         # Lógica del módulo PQRS
+│   └── adminView.js        # Lógica del panel administrativo
+└── utils/helpers.js        # Notificaciones, confirmación, XSS
 ```
 
-### Separación de responsabilidades
+## 4. Requisitos previos
 
-| Capa | Responsabilidad |
-|------|-----------------|
-| `services/` | Realiza las peticiones HTTP (fetch) hacia la API. |
-| `ui/` | Pinta los datos en el DOM (tablas, selectores). |
-| `views/` | Enlaza los eventos y orquesta services + ui. |
-| `utils/` | Helpers genéricos (XSS, notificaciones, modales). |
+- Node.js 18+
+- Backend levantado en `http://localhost:3000` si se desea sincronizar con datos reales.
+- MySQL configurado para la base `inventario_adso`.
 
----
-
-## ✅ Requisitos previos
-
-- **Node.js** 18 o superior (recomendado 20+).
-- **Backend levantado** en `http://localhost:3000` (ver README del repositorio `Backend`).
-- **Base de datos MySQL** configurada y con las tablas aplicadas (`inventario_adso`).
-
----
-
-## 🚀 Instalación
+## 5. Instalación y ejecución
 
 ```bash
-# Paso 1. Instalar dependencias
 npm install
+npm run dev
+npm run build
+npm run preview
 ```
 
-## ⚙️ Configuración
+### Variables de entorno
 
-Copia `.env.example` a `.env` y ajusta si es necesario:
+Crea un archivo `.env` a partir de `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-| Variable | Valor por defecto | Descripción |
-|----------|-------------------|-------------|
-| `VITE_API_BASE_URL` | `/api` | Prefijo de las peticiones a la API. |
+Variable principal:
 
-En desarrollo, Vite redirige (proxy) las peticiones que empiezan por `/api`
-hacia el backend en `http://localhost:3000` (configurado en `vite.config.js`),
-eliminando el prefijo y evitando errores de CORS.
+| Variable | Valor | Descripción |
+|---|---|---|
+| VITE_API_BASE_URL | /api | Prefijo base usado por el frontend para hablar con el backend. |
 
-## ▶️ Ejecución
-
-```bash
-npm run dev       # servidor de desarrollo con recarga en caliente (http://localhost:5173)
-npm run build     # genera la versión de producción en dist/
-npm run preview   # sirve localmente el build generado
-```
-
-### Flujo completo de uso
-
-1. Inicia el backend: en la carpeta `Backend` ejecuta `npm start` (puerto 3000).
-2. Inicia el frontend: en la carpeta `Frontend` ejecuta `npm run dev`.
-3. Abre `http://localhost:5173` en el navegador.
-4. Usa las pestañas superiores para navegar entre los módulos.
-
----
-
-## 🖥️ Cómo se usa cada módulo
+## 6. Cómo usar la interfaz
 
 ### Inventario
 
-- **Categorías:** escribe el nombre en el primer formulario y presiona
-  **Agregar**. Edita o elimina desde las acciones de cada fila.
-- **Productos:** llena el segundo formulario con **nombre, precio y categoría**
-  (el código `PRD-NNN` y el stock se generan automáticamente) y presiona
-  **Agregar**. Edita o elimina desde la tabla.
+- Agrega una categoría desde el primer formulario.
+- Agrega un producto indicando nombre, precio y categoría.
+- Edita o elimina desde la tabla con los botones de acción.
 
 ### Tareas
 
-- Crea una tarea con **título, descripción y usuario asignado**.
-- Cambia el estado entre `pendiente`, `en_progreso` y `completada`.
-- Elimina la tarea cuando se haya resuelto.
+- Crea tareas con título, descripción y usuario asignado.
+- Cambia el estado desde el selector de cada fila.
+- Elimina la tarea cuando ya no sea necesaria.
 
 ### PQRS
 
-- Selecciona el tipo de solicitud: `peticion`, `queja`, `reclamo` o `sugerencia`.
-- Escribe la descripción y envía la solicitud.
-- Gestiona su estado (`abierta`, `en_proceso`, `cerrada`) desde la tabla.
+- Selecciona el tipo de solicitud.
+- Escribe una descripción y envía la solicitud.
+- Cambia el estado desde la tabla.
 
 ### Administración
 
-- Muestra estadísticas globales del sistema: cantidad de **usuarios, tareas y PQRS**.
+- Consulta los totales de usuarios, tareas y PQRS en la vista administrativa.
 
----
+## 7. Nota importante sobre el backend
 
-## 🗄️ Base de datos
+Actualmente el frontend incluye una capa local de respaldo en `src/services/api.js` para que la UI siga siendo usable en demo incluso si el backend no está corriendo. Cuando el backend real está disponible, la aplicación usa el proxy de Vite y las rutas comenzando con `/api`.
 
-La base `inventario_adso` es compartida con el backend. El script de creación
-y los datos iniciales están en `Backend/project/database/schema.sql`.
+## 8. Estado de compilación verificado
 
----
-
-## CENTRO DE DOCUMENTACIÓN (WIKI DEL PROYECTO)
-
-Antes de escribir la primera línea de código o ejecutar un comando, es obligatorio revisar las guías de trabajo.
-
-### Nivel 1. Sistema
-**Ubicación:** `docs/01-guia-sistema/`
-- Manuales técnicos: creación de Issues y Milestones
-
-### Nivel 2. Metodología
-**Ubicación:** `docs/02-guia-metodologia/`
-- Reglas para reportar tareas y solicitar revisiones (PR)
-
-### Nivel 3. Formatos
-**Ubicación:** `docs/03-formatos-maestros/`
-- Plantillas oficiales de documentos
-
----
-
-## ROLES DE LA CÉLULA ÁGIL
-
-### Líder (Arquitecto)
-
-- **Responsabilidad:** Integridad del repositorio y control de calidad
-- **Tareas en GitHub:**
-  - Protección de ramas
-  - Gestión de Milestones
-  - Aprobación de Pull Requests
-
-### Desarrollador (Albañil)
-
-- **Responsabilidad:** Construcción de módulos y lógica
-- **Tareas en GitHub:**
-  - Desarrollo en ramas `feat/`
-  - Reporte de avances
-  - Solicitud de revisión técnica
-
-### El "Por qué"
-
-La división de roles evita duplicidad de tareas y establece una jerarquía clara de responsabilidad (segregación de funciones), esencial en equipos de alto rendimiento.
-
----
-
-## METODOLOGÍA DE TRABAJO (GITFLOW PROFESIONAL)
-
-El flujo de trabajo es el corazón de nuestra colaboración.
-Está estrictamente prohibido hacer commits directos sobre las ramas `main` o `develop`.
-
-### Paso 1. Sincronizar
+El proyecto se ha verificado de forma real con:
 
 ```bash
-git checkout develop
-git pull origin develop
+npm run build
 ```
 
-### Paso 2. Rama de Tarea
+Resultado esperado:
 
-```bash
-git checkout -b feat/nombre-tarea
-```
+- Vite genera el build de producción en `dist/`.
+- La app queda lista para servirse o desplegarse.
 
-### Paso 3. Desarrollo
-
-Escribe código limpio y realiza commits descriptivos.
-
-### Paso 4. Sincronización Final
-
-```bash
-git checkout develop
-git pull origin develop
-git checkout feat/nombre-tarea
-git merge develop
-```
-
-### Paso 5. Solicitud de PR
 
 ```bash
 git push origin feat/nombre-tarea
