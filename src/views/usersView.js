@@ -15,6 +15,7 @@
  */
 import {
   obtenerUsuarios,
+  obtenerUsuario,
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario,
@@ -80,10 +81,15 @@ function setupTabla() {
     const id = Number(button.dataset.id);
 
     if (button.classList.contains("edit")) {
-      editingUserId = id;
-      document.getElementById("user-name").value = button.dataset.name;
-      document.getElementById("user-email").value = button.dataset.email;
-      document.getElementById("add-user").textContent = "Actualizar";
+      try {
+        const usuario = await obtenerUsuario(id);
+        editingUserId = id;
+        document.getElementById("user-name").value = usuario.name;
+        document.getElementById("user-email").value = usuario.email;
+        document.getElementById("add-user").textContent = "Actualizar";
+      } catch (error) {
+        mostrarNotificacion("Error al obtener usuario: " + error.message);
+      }
     }
 
     if (button.classList.contains("delete")) {

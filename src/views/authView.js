@@ -41,7 +41,7 @@ export function ocultarLogin() {
  */
 export function renderizarUsuarioSesion() {
   const sesion = obtenerSesion();
-  const nombreEl = document.getElementById("user-name");
+  const nombreEl = document.getElementById("header-user-name");
   const rolEl = document.getElementById("user-role");
 
   if (sesion) {

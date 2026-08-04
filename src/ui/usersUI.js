@@ -32,7 +32,7 @@ export function renderizarTablaUsuarios(usuarios) {
         <td>${escaparHTML(usuario.email)}</td>
         <td>${formatearFecha(usuario.createdAt)}</td>
         <td class="actions">
-          <button class="edit" data-id="${usuario.id}" data-name="${escaparHTML(usuario.name)}" data-email="${escaparHTML(usuario.email)}">Editar</button>
+          <button class="edit" data-id="${usuario.id}">Editar</button>
           <button class="delete" data-id="${usuario.id}">Eliminar</button>
         </td>
       </tr>`;
