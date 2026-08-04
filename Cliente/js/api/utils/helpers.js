@@ -17,6 +17,17 @@
  */
 
 
+// Convierte texto en HTML seguro para evitar inyección de código (XSS).
+export function escaparHTML(texto) {
+  return String(texto).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[c]);
+}
+
 // Muestra un mensaje temporal de notificación en la interfaz.
 export function mostrarNotificacion(mensaje, tipo = 'error') {
   const container = document.getElementById('notificaciones') || crearContenedorNotificaciones();
@@ -42,12 +53,13 @@ export function mostrarConfirmacion(mensaje) {
     overlay.className = 'modal-overlay';
     overlay.innerHTML = `
       <div class="modal-confirmacion">
-        <p>${mensaje}</p>
+        <p></p>
         <div class="modal-acciones">
           <button class="btn-cancelar">Cancelar</button>
           <button class="btn-confirmar">Eliminar</button>
         </div>
       </div>`;
+    overlay.querySelector('p').textContent = mensaje;
     document.body.appendChild(overlay);
 
     overlay.querySelector('.btn-confirmar').onclick = () => {

@@ -17,6 +17,8 @@
  */
 
 
+import { escaparHTML } from '../utils/helpers.js';
+
 // Muestra en la tabla todas las categorías registradas.
 export function renderizarTablaCategorias(categorias) {
   const tbody = document.getElementById('categories-body');
@@ -25,9 +27,9 @@ export function renderizarTablaCategorias(categorias) {
     tbody.innerHTML += `
       <tr>
         <td>${cat.id}</td>
-        <td>${cat.name}</td>
+        <td>${escaparHTML(cat.name)}</td>
         <td class="actions">
-          <button class="edit" data-id="${cat.id}" data-name="${cat.name}">Editar</button>
+          <button class="edit" data-id="${cat.id}" data-name="${escaparHTML(cat.name)}">Editar</button>
           <button class="delete" data-id="${cat.id}">Eliminar</button>
         </td>
       </tr>`;
@@ -45,9 +47,9 @@ export function renderizarTablaProductos(productos, categorias) {
     tbody.innerHTML += `
       <tr>
         <td>${prod.id}</td>
-        <td>${prod.name}</td>
+        <td>${escaparHTML(prod.name)}</td>
         <td>$${prod.price}</td>
-        <td>${catMap[prod.categoryId] || 'Sin categoría'}</td>
+        <td>${escaparHTML(catMap[prod.categoryId] || 'Sin categoría')}</td>
         <td class="actions">
           <button class="edit" data-id="${prod.id}">Editar</button>
           <button class="delete" data-id="${prod.id}">Eliminar</button>
