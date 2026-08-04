@@ -114,13 +114,26 @@
             </select>
             <button id="add-task">Agregar</button>
           </div>
+          <!-- ======================================================
+               BARRA DE FILTROS DE TAREAS
+               Reduce el listado de la tabla sin recargar la página:
+               - filter-task-status: filtra por estado (Pendiente,
+                 En progreso, Completada) o muestra todos (vacío).
+               - filter-task-user:   filtra por el usuario asignado
+                 o muestra todos (vacío).
+               La lógica de filtrado vive en src/views/tasksView.js
+               (función aplicarFiltros) y el select de usuarios se
+               llena desde src/ui/tasksUI.js.
+               ====================================================== -->
           <div class="filters">
+            <!-- Select de filtro por estado de la tarea. -->
             <select id="filter-task-status">
               <option value="">Todos los estados</option>
               <option value="pendiente">Pendiente</option>
               <option value="en_progreso">En progreso</option>
               <option value="completada">Completada</option>
             </select>
+            <!-- Select de filtro por usuario asignado (lo llena tasksUI.js). -->
             <select id="filter-task-user">
               <option value="">Todos los usuarios</option>
             </select>
