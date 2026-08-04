@@ -215,6 +215,19 @@ function setupTabla() {
       await cambiarEstadoTarea(Number(select.dataset.id), {
         status: select.value,
       });
+      // Actualiza la copia en memoria para que quede consistente.
+      const indice = todasLasTareas.findIndex(
+        (tarea) => tarea.id === Number(select.dataset.id)
+      );
+      if (indice >= 0) {
+        todasLasTareas[indice] = {
+          ...todasLasTareas[indice],
+          status: select.value,
+        };
+      }
+      // Reaplica los filtros: si la tarea dejó de cumplir el filtro activo,
+      // desaparece de la tabla al instante, sin recargar la página.
+      aplicarFiltros();
       mostrarNotificacion("Estado de la tarea actualizado", "exito");
     } catch (error) {
       mostrarNotificacion(error.message);
